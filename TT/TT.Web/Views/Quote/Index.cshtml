@@ -20,7 +20,7 @@
         <tbody data-bind="foreach: filteredQuotes">
         <tr>
             <td data-bind="text: Symbol"></td>
-            <td data-bind="text: Change() + ' (' +  ChangePercent() + '%)', style: { color: Change() > 0 ? 'green' : 'red' }"></td>
+            <td data-bind="text: ChangePoints() + ' (' +  ChangePercent() + '%)', style: { color: ChangePoints() > 0 ? 'green' : 'red' }"></td>
             <td data-bind="text: Bid"></td>
             <td data-bind="text: Ask"></td>
         </tr>

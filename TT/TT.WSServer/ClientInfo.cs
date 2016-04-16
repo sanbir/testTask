@@ -3,7 +3,7 @@ using Fleck;
 
 namespace TT.WSServer
 {
-    internal class ClientInfo
+    public class ClientInfo
     {
         public ClientInfo(Guid connectionGuid, IWebSocketConnection connection)
         {

@@ -50,7 +50,7 @@ namespace TT.WSServer
             }
         }
 
-        internal static readonly ConcurrentDictionary<Guid, ClientInfo> ClientInfo = new ConcurrentDictionary<Guid, ClientInfo>();
+        public static readonly ConcurrentDictionary<Guid, ClientInfo> ClientInfo = new ConcurrentDictionary<Guid, ClientInfo>();
 
         public void Initialize()
         {
@@ -87,7 +87,15 @@ namespace TT.WSServer
                 foreach (var clientInfo in ClientInfo.Values)
                 {
                     
-                    List<QuotePoco> quotesToUser = quotes.Where(quote => quote.SymbolName.ToLower().Contains(clientInfo.Filter.ToLower())).ToList();
+                    List<QuotePoco> quotesToUser;
+                    if (String.IsNullOrEmpty(clientInfo.Filter))
+                    {
+                        quotesToUser = quotes;
+                    }
+                    else
+                    {
+                        quotesToUser = quotes.Where(quote => quote.Symbol.ToLower().Contains(clientInfo.Filter.ToLower())).ToList();
+                    }
                     
                     string message = JsonConvert.SerializeObject(quotesToUser);
 

@@ -8,9 +8,9 @@ namespace TT.DAL.Pocos
 {
     public class QuotePoco
     {
-        public string SymbolName { get; set; }
-        public decimal BidValue { get; set; }
-        public decimal AskValue { get; set; }
+        public string Symbol { get; set; }
+        public decimal Bid { get; set; }
+        public decimal Ask { get; set; }
         public decimal ChangePoints { get; set; }
         public decimal ChangePercent { get; set; }
         public DateTime Time { get; set; }

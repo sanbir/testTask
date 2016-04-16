@@ -20,7 +20,7 @@ namespace TT.WSServer
             _quoteService = new QuoteFetcherService();
         }
 
-        private List<QuotePoco> _previousQuotes; 
+        private List<QuotePoco> _previousQuotes = new List<QuotePoco>(); 
 
         public void Listen()
         {
@@ -28,14 +28,19 @@ namespace TT.WSServer
             while (true)
             {
                 Thread.Sleep(5000);
-                
+
+                if (WSServer.Server.ClientInfo.Values.Count < 1)
+                {
+                    continue;
+                }
+
                 var quotes = _quoteService.GetQuotes();
 
                 var quotesToSend = new List<QuotePoco>();
 
                 foreach (var quote in quotes)
                 {
-                    var found = _previousQuotes.FirstOrDefault(q => q.SymbolName == quote.SymbolName);
+                    var found = _previousQuotes.FirstOrDefault(q => q.Symbol == quote.Symbol);
                     if (found != null)
                     {
                         if (!AreEqual(found, quote))
@@ -49,13 +54,15 @@ namespace TT.WSServer
                     }
                 }
 
+                _previousQuotes = quotes;
+
                 _webSocketServer.NotifySubscribers(quotesToSend);
             }
         }
 
         private bool AreEqual(QuotePoco quote, QuotePoco quote2)
         {
-            return quote.AskValue == quote2.AskValue && quote.BidValue == quote2.BidValue;
+            return quote.Ask == quote2.Ask && quote.Bid == quote2.Bid;
         }
     }
 }

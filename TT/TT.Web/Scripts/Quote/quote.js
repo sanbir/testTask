@@ -3,7 +3,7 @@
 var Quote = function(symbol, change, changePercent, bid, ask)
 {
     this.Symbol = ko.observable(symbol);
-    this.Change = ko.observable(change);
+    this.ChangePoints = ko.observable(change);
     this.ChangePercent = ko.observable(changePercent);
 
     this.Bid = ko.observable(bid);
@@ -14,9 +14,9 @@ var Quote = function(symbol, change, changePercent, bid, ask)
 var getTestQuotes = function ()
 {
     var result = [];
-    result.push(new Quote("usdeur", 23, 3, 3,6));
-    result.push(new Quote("gbpusd", -3,- 2 ,31, 61));
-    result.push(new Quote("usdcad", 53,5, 13, 16));
+    result.push(ko.observable(new Quote("usdeur".toUpperCase(), 23, 3, 3,6)));
+    result.push(ko.observable(new Quote("gbpusd".toUpperCase(), -3, -2, 31, 61)));
+    result.push(ko.observable(new Quote("usdcad".toUpperCase(), 53, 5, 13, 16)));
     return result;
 };
 
@@ -26,11 +26,17 @@ var wsImpl = window.WebSocket || window.MozWebSocket;
 var ws = new wsImpl('ws://localhost:8082/');
 ws.onmessage = function (evt)
 {
-    var quotes = evt.data;
+    var quotes = JSON.parse(evt.data);
 
     for (var i = 0; i < quotes.length; i++)
     {
-        
+        for (var j = 0; j < quoteModel.quotes().length; j++)
+        {
+            if (quotes[i].Symbol == quoteModel.quotes()[j]().Symbol())
+            {
+                quoteModel.quotes()[j](ko.mapping.fromJS(quotes[i]));
+            }
+        }
     }
 
 };
