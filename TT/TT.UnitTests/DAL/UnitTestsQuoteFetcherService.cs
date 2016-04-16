@@ -13,7 +13,7 @@ namespace TT.UnitTests
         public void TestGetQuoutes()
         {
            var quoteService = Unity.Container.Resolve<IQuoteService>();
-           var quotes = quoteService.GetQuoutes();
+           var quotes = quoteService.GetQuotes();
         }
     }
 }
