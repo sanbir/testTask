@@ -61,10 +61,12 @@
   <ItemGroup>
     <Compile Include="Entity\QuoteEntity.cs" />
     <Compile Include="Pocos\QuotePoco.cs" />
-    <Compile Include="Pocos\QuoteValuePoco.cs" />
+    <Compile Include="Rest\QuoteRest.cs" />
+    <Compile Include="Rest\QuoteValueRest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BaseMongoRepository.cs" />
     <Compile Include="Repository\QuoteRepository.cs" />
+    <Compile Include="Services\IQuoteService.cs" />
     <Compile Include="Services\QuoteFetcherService.cs" />
   </ItemGroup>
   <ItemGroup>

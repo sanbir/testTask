@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp.Deserializers;
+﻿using RestSharp.Deserializers;
 
-namespace TT.DAL.Pocos
+namespace TT.DAL.Rest
 {
     //{"S":"EURJPY","G":"Forex majors","D":3,"B":122.823,"A":122.84,"DL":122.582,"DH":123.561,"CHG":-43.4,"CHG%":-0.35,"AD":0}
-    public class QuoteValuePoco
+    public class QuoteValueRest
     {
         [DeserializeAs(Name = "S")]
         public string SymbolName { get; set; }
