@@ -17,7 +17,7 @@ namespace TT.DAL.Rest
         public decimal DH { get; set; }
         [DeserializeAs(Name = "CHG")]
         public decimal ChangePoints { get; set; }
-        [DeserializeAs(Name = "GHG%")]
+        [DeserializeAs(Name = "CHG%")]
         public decimal GhangePercent { get; set; }
         public decimal AD { get; set; }
     }
