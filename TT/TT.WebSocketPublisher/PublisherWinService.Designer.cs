@@ -1,6 +1,6 @@
-﻿namespace WebSocketService
+﻿namespace TT.WebSocketPublisher
 {
-    partial class Service1
+    partial class PublisherWinService
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.ServiceName = "PublisherWinService";
         }
 
         #endregion

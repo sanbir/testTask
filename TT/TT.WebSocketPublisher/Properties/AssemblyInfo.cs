@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WebSocketService")]
+[assembly: AssemblyTitle("TT.WebSocketPublisher")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WebSocketService")]
+[assembly: AssemblyProduct("TT.WebSocketPublisher")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("852c7def-aba2-474d-8d01-6e3cedacde6b")]
+[assembly: Guid("53da8d27-4544-4eb3-9c21-613b64d48065")]
 
 // Version information for an assembly consists of the following four values:
 //
