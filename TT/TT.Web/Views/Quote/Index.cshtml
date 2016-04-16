@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Quotes";
+}
+
+<div id="quotes" class="container">
+    <h2>Quotes</h2>
+    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+   
+    <input placeholder="Search..." type="text" class="form-control" data-bind="value: search, valueUpdate: 'afterkeydown'">
+   
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Symbol</th>
+            <th>Change</th>
+            <th>Bid</th>
+            <th>Ask</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: filteredQuotes">
+        <tr>
+            <td data-bind="text: Symbol"></td>
+            <td data-bind="text: Change() + ' (' +  ChangePercent() + '%)', style: { color: Change() > 0 ? 'green' : 'red' }"></td>
+            <td data-bind="text: Bid"></td>
+            <td data-bind="text: Ask"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" src="../../Scripts/Quote/quote.js"> </script>
