@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.MarketDataService", "TT.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Core", "TT.Core\TT.Core.csproj", "{838291C3-3A57-4E92-B690-3BE938A0CD3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.DAL", "TT.DAL\TT.DAL.csproj", "{79BBEF24-648C-4222-B54C-89D838F01259}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{838291C3-3A57-4E92-B690-3BE938A0CD3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{838291C3-3A57-4E92-B690-3BE938A0CD3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{838291C3-3A57-4E92-B690-3BE938A0CD3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79BBEF24-648C-4222-B54C-89D838F01259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79BBEF24-648C-4222-B54C-89D838F01259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79BBEF24-648C-4222-B54C-89D838F01259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79BBEF24-648C-4222-B54C-89D838F01259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
