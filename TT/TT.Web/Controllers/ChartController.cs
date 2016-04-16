@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace TT.Web.Controllers
 {
-    public class HomeController : Controller
+    public class ChartController : Controller
     {
-        // GET: Home
+        // GET: Chart
         public ActionResult Index()
         {
             return View();

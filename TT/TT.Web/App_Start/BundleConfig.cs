@@ -23,6 +23,13 @@ namespace TT.Web
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                      "~/Scripts/knockout-3.4.0.debug.js"
+                     ));
+
+
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
