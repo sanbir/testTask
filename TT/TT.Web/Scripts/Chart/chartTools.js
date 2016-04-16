@@ -3,11 +3,8 @@
     var result = {};
     result.GetTestChartData = function()
     {
-        
-
         var random = function () { return Math.round(Math.random()*2 - 1) }; //from -1 to 1
-
-
+        
         var d = 0;
 
         var getNext = function(current)

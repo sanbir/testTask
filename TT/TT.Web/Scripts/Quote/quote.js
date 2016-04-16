@@ -1,6 +1,5 @@
 ﻿
 
-
 var Quote = function(symbol, change, changePercent, bid, ask)
 {
     this.Symbol = ko.observable(symbol);
@@ -20,6 +19,22 @@ var getTestQuotes = function ()
     result.push(new Quote("usdcad", 53,5, 13, 16));
     return result;
 };
+
+
+var wsImpl = window.WebSocket || window.MozWebSocket;
+// create a new websocket and connect
+var ws = new wsImpl('ws://localhost:8082/');
+ws.onmessage = function (evt)
+{
+    var quotes = evt.data;
+
+    for (var i = 0; i < quotes.length; i++)
+    {
+        
+    }
+
+};
+
 
 var QuoteModel = function ()
 {
@@ -50,6 +65,8 @@ var QuoteModel = function ()
     }, this);
 };
 
+var quoteModel = new QuoteModel();
 
 
-ko.applyBindings(new QuoteModel(), document.getElementById("quotes"));
+
+ko.applyBindings(quoteModel, document.getElementById("quotes"));

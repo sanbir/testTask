@@ -2,8 +2,7 @@
 
 var Pair = function (symbol) {
     this.Symbol = symbol;
-   
-    };
+   };
 
 
 var getTestPairs = function () {
