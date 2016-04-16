@@ -23,7 +23,11 @@ namespace TT.DAL.Repository
 
         public void Add(IEnumerable<QuotePoco> quotes)
         {
-            
+            foreach (var quote in quotes)
+            {
+                var quouteToDb = _mapper.Map<QuoteEntity>(quote);
+                this.Collection.Save(quouteToDb);
+            }
         }
 
         public List<QuotePoco> Get(string SymbolName)

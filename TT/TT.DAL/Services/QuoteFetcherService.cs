@@ -40,6 +40,8 @@ namespace TT.DAL.Services
             if (quoteRestsResponse.StatusCode == HttpStatusCode.OK)
             {
                 quoteRestsResponse.Data.ForEach(d => d.Values.ForEach(qValue => res.Add(_mapper.Map<QuotePoco>(qValue))));
+                var currentTime = DateTime.UtcNow;
+                res.ForEach(q => q.Time = currentTime);
             }
             else
             {

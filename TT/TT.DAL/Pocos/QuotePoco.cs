@@ -13,5 +13,6 @@ namespace TT.DAL.Pocos
         public decimal AskValue { get; set; }
         public decimal ChangePoints { get; set; }
         public decimal GhangePercent { get; set; }
+        public DateTime Time { get; set; }
     }
 }
