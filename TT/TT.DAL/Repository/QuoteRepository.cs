@@ -13,19 +13,22 @@ namespace TT.DAL.Repository
     public class QuoteRepository : BaseMongoRepository<QuoteEntity>, IQuoteRepository
     {
         private static int _maximumPointsNumber = 720;
-        private AutoMapper.IMapper _mapper;
+        private AutoMapper.IMapper _mapperQuotePoco;
+        private AutoMapper.IMapper _mapperQuoteEntity;
 
         public QuoteRepository() : base()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<QuotePoco, QuoteEntity>());
-            _mapper = config.CreateMapper();
+            _mapperQuotePoco = config.CreateMapper();
+            config = new MapperConfiguration(cfg => cfg.CreateMap<QuoteEntity, QuotePoco>());
+            _mapperQuoteEntity = config.CreateMapper();
         }
 
         public void Add(IEnumerable<QuotePoco> quotes)
         {
             foreach (var quote in quotes)
             {
-                var quouteToDb = _mapper.Map<QuoteEntity>(quote);
+                var quouteToDb = _mapperQuoteEntity.Map<QuoteEntity>(quote);
                 this.Collection.Save(quouteToDb);
             }
         }
@@ -34,7 +37,7 @@ namespace TT.DAL.Repository
         {
            return this.Collection.AsQueryable().
                 Where(quoteData => quoteData.SymbolName == SymbolName).ToList().
-                Select(e => _mapper.Map<QuotePoco>(e)).ToList();
+                Select(e => _mapperQuotePoco.Map<QuotePoco>(e)).ToList();
         }
     }
 }
