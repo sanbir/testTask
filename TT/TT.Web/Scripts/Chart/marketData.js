@@ -1,4 +1,5 @@
-﻿var MarketData = function()
+﻿var MarketData = function(date, bid)
 {
- //this.Date
+    this.Date = date;
+    this.Bid = bid;
 }

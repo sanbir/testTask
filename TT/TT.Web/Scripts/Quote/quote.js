@@ -27,14 +27,7 @@ var QuoteModel = function ()
     this.quotes = ko.observableArray();
 
     this.quotes(getTestQuotes());
-
-    this.registerClick = function () {
-        
-    };
-
-    this.resetClicks = function () {
-     
-    };
+    
 
     this.hasClickedTooManyTimes = ko.pureComputed(function () {
         return this.numberOfClicks() >= 3;
@@ -53,16 +46,6 @@ var QuoteModel = function ()
             {
                 return el.Symbol().toLowerCase().indexOf(this.search().toLowerCase()) > -1;
             }, this);
-            /* var result = [];
-             ko.utils.arrayForEach(this.quotes, (q) =>
-             {
-                 var newQ = $.extend({}, q);
-                 if (newQ.Symbol().toLowerCase().indexOf(this.search().toLowerCase()) > -1)
-                 {
-                     result.push(newQ);
-                 }
-             });
-             return result;*/
         }
     }, this);
 };
