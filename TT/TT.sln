@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Core", "TT.Core\TT.Core.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.DAL", "TT.DAL\TT.DAL.csproj", "{79BBEF24-648C-4222-B54C-89D838F01259}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.WebSocketPublisher", "TT.WebSocketPublisher\TT.WebSocketPublisher.csproj", "{53DA8D27-4544-4EB3-9C21-613B64D48065}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.WSServer", "TT.WSServer\TT.WSServer.csproj", "{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{79BBEF24-648C-4222-B54C-89D838F01259}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79BBEF24-648C-4222-B54C-89D838F01259}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79BBEF24-648C-4222-B54C-89D838F01259}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53DA8D27-4544-4EB3-9C21-613B64D48065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53DA8D27-4544-4EB3-9C21-613B64D48065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53DA8D27-4544-4EB3-9C21-613B64D48065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53DA8D27-4544-4EB3-9C21-613B64D48065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
