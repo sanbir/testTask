@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebSocketService
+namespace TT.WebSocketPublisher
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace WebSocketService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new PublisherWinService()
             };
             ServiceBase.Run(ServicesToRun);
         }
