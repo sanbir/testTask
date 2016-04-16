@@ -9,17 +9,11 @@ namespace TT.WebSocketPublisher
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        static void Main()
+        static void Main(string[] args)
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new PublisherWinService()
-            };
-            ServiceBase.Run(ServicesToRun);
+            var service = new PublisherWinService();
+
+            service.RunService(args);
         }
     }
 }

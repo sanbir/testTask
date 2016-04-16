@@ -47,10 +47,7 @@ namespace TT.WebSocketPublisher
         {
             try
             {
-                if (_bootstrapper != null)
-                {
-                    _bootstrapper.Dispose();
-                }
+                _bootstrapper?.Dispose();
                 Logger.Current.Info("--SERVICE STOPPED--");
             }
             catch (Exception ex)
