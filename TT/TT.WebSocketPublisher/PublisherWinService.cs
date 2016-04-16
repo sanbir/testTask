@@ -8,12 +8,14 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using TT.Core.Logger;
+using TT.DAL.Services;
+using TT.WSServer;
 
 namespace TT.WebSocketPublisher
 {
     partial class PublisherWinService : ServiceBase
     {
-        private static Bootstrapper _bootstrapper;
+        private static Server _fleckServer;
 
         public PublisherWinService()
         {
@@ -27,7 +29,11 @@ namespace TT.WebSocketPublisher
 
             try
             {
-                _bootstrapper = new Bootstrapper();
+
+                
+                _fleckServer = new Server(quoteListener);
+                _fleckServer.Initialize();
+
                 Logger.Current.Info("--SERVICE STARTED--");
             }
             catch (Exception ex)
@@ -47,7 +53,7 @@ namespace TT.WebSocketPublisher
         {
             try
             {
-                _bootstrapper?.Dispose();
+                _fleckServer?.Dispose();
                 Logger.Current.Info("--SERVICE STOPPED--");
             }
             catch (Exception ex)

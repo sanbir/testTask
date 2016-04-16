@@ -1,21 +1,34 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Fleck;
+using Newtonsoft.Json;
 using TT.Core.Logger;
 using TT.Core.Settings;
+using TT.DAL.Pocos;
+using TT.DAL.Services;
 using TT.WSServer.DTO;
 
 namespace TT.WSServer
 {
     public class Server : IDisposable
     {
-        private static WebSocketServer _server;
+        private readonly IQuoteListener _quoteListener;
+        private WebSocketServer _server;
+
+        
 
         public Server()
         {
+            _quoteListener = new QuoteListener(this);
+            
             FleckLog.LogAction = OverrideFleckLogging;
 
-            HandleMessageFromClient(new WSClientMessage());
+            //HandleMessageFromClient(new WSClientMessage());
         }
 
         private void OverrideFleckLogging(LogLevel level, string message, Exception ex)
@@ -37,6 +50,8 @@ namespace TT.WSServer
             }
         }
 
+        internal static readonly ConcurrentDictionary<Guid, ClientInfo> ClientInfo = new ConcurrentDictionary<Guid, ClientInfo>();
+
         public void Initialize()
         {
             string location = TTSettings.GetAppSetting<string>("hostingUrl", defaultVal: "ws://0.0.0.0:8080");
@@ -46,18 +61,43 @@ namespace TT.WSServer
             {
                 socket.OnOpen = () =>
                 {
-                    ConnectionManager.OnOpen(socket);
+                    ClientInfo.TryAdd(socket.ConnectionInfo.Id, new ClientInfo(socket.ConnectionInfo.Id,socket));
                 };
 
                 socket.OnError = OnError;
 
                 socket.OnClose = () =>
                 {
-                    ConnectionManager.OnClose(socket);
+                    var found = ClientInfo.FirstOrDefault(ci => ci.Key == socket.ConnectionInfo.Id).Value;
+                    if(found != null)
+                    ClientInfo.TryRemove(socket.ConnectionInfo.Id, out found);
                 };
 
                 socket.OnMessage = message => OnMessageFromClient(message, socket);
             });
+
+            _quoteListener.Listen();
+
+        }
+
+        internal void NotifySubscribers( List<QuotePoco> quotes)
+        {
+            try
+            {
+                foreach (var clientInfo in ClientInfo.Values)
+                {
+                    
+                    List<QuotePoco> quotesToUser = quotes.Where(quote => quote.SymbolName.ToLower().Contains(clientInfo.Filter.ToLower())).ToList();
+                    
+                    string message = JsonConvert.SerializeObject(quotesToUser);
+
+                    clientInfo.Connection.Send(message);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Error(ex.Message, ex);
+            }
         }
 
         private void OnError(Exception x)
@@ -67,10 +107,6 @@ namespace TT.WSServer
 
         private void OnMessageFromClient(string requestMessage, IWebSocketConnection socket)
         {
-            //TODO: add some message validation here
-            if (requestMessage == "" || !requestMessage.StartsWith("0=", StringComparison.Ordinal))
-                return;
-
             IPAddress ip;
             if (IPAddress.TryParse(socket.ConnectionInfo.ClientIpAddress, out ip))
             {
@@ -79,23 +115,17 @@ namespace TT.WSServer
                     RawMessage = requestMessage,
                     ConnectionGuid = socket.ConnectionInfo.Id,
                     ClientIP = ip.GetAddressBytes(),
-                    ClientIPString = socket.ConnectionInfo.ClientIpAddress,
-                    AuthCreatedTime = DateTime.Now
+                    ClientIPString = socket.ConnectionInfo.ClientIpAddress
                 };
+                
             }
             else
                 Logger.Current.Info(
                     $"Unable to parse IP {socket.ConnectionInfo.ClientIpAddress} from req msg {requestMessage}");
         }
 
-        private void HandleMessageFromClient(WSClientMessage clientMessage)
-        {
-            ConnectionManager.OnSubscriptionMessage(ref clientMessage);
-
-            //_quoteProcessor.GetDataAndSubscribe(clientMessage.ConnectionGuid, clientMessage.SubscribedSymbols, clientMessage.IsUserRealTimeProvisioned);
-
-            Logger.Current.Info($"Incoming req msg [{clientMessage.RawMessage}] from {clientMessage.ConnectionGuid}");
-        }
+      
+       
 
         public void Dispose()
         {

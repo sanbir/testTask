@@ -12,13 +12,7 @@ namespace TT.WSServer.DTO
 
         internal string[] SubscribedSymbols;
 
-        internal bool IsUserRealTimeProvisioned;
-
         internal Guid ConnectionGuid;
-
-        internal Guid AuthorizationGuid;
-
-        internal DateTime AuthCreatedTime;
 
         internal byte[] ClientIP;
 
@@ -27,7 +21,7 @@ namespace TT.WSServer.DTO
         public override string ToString()
         {
             return
-                $"Auth: {AuthorizationGuid} Conn: {ConnectionGuid} TS: {AuthCreatedTime} IP: {ClientIP} RealTime: {IsUserRealTimeProvisioned} Msg: {RawMessage}";
+                $"Conn: {ConnectionGuid} IP: {ClientIP} Msg: {RawMessage}";
         }
     }
 }
