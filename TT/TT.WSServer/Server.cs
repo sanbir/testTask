@@ -80,7 +80,7 @@ namespace TT.WSServer
 
         }
 
-        internal void NotifySubscribers( List<QuotePoco> quotes)
+        public void NotifySubscribers( List<QuotePoco> quotes)
         {
             try
             {
