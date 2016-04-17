@@ -34,6 +34,12 @@ namespace TT.WSServer
             _quoteRepository.Add(quotes);
         }
 
+        private void UpdateDatabase(List<QuotePoco> quotes)
+        {
+            Task.Run(() => AddNewToDatabase(quotes));
+            Task.Run(() => RemoveOldFromDatabase());
+        }
+
         private void NotifySubscribers(List<QuotePoco> quotes)
         {
             if (WSServer.Server.ClientInfo.Values.Count < 1)
@@ -73,8 +79,7 @@ namespace TT.WSServer
                 var quotes = _quoteService.GetQuotes();
 
                 Task.Run(() => NotifySubscribers(quotes));
-                Task.Run(() => AddNewToDatabase(quotes));
-                Task.Run(() => RemoveOldFromDatabase());
+                Task.Run(() => UpdateDatabase(quotes));
             }
             }
 
