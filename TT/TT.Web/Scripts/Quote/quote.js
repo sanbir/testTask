@@ -14,7 +14,7 @@ var Quote = function(symbol, change, changePercent, bid, ask)
 var getTestQuotes = function ()
 {
     var result = [];
-    result.push(ko.observable(new Quote("usdeur".toUpperCase(), 23, 3, 3,6)));
+    result.push(ko.observable(new Quote("eurusd".toUpperCase(), 23, 3, 3,6)));
     result.push(ko.observable(new Quote("gbpusd".toUpperCase(), -3, -2, 31, 61)));
     result.push(ko.observable(new Quote("usdcad".toUpperCase(), 53, 5, 13, 16)));
     return result;
@@ -30,12 +30,20 @@ ws.onmessage = function (evt)
 
     for (var i = 0; i < quotes.length; i++)
     {
+        var newQ = ko.mapping.fromJS(quotes[i]);
+        var found = false;
+
         for (var j = 0; j < quoteModel.quotes().length; j++)
         {
-            if (quotes[i].Symbol == quoteModel.quotes()[j]().Symbol())
+            if (newQ.Symbol() == quoteModel.quotes()[j]().Symbol())
             {
-                quoteModel.quotes()[j](ko.mapping.fromJS(quotes[i]));
+                quoteModel.quotes()[j](newQ);
+                found = true;
             }
+        }
+        if (!found)
+        {
+           quoteModel.quotes.push(ko.observable(newQ));
         }
     }
 
@@ -47,7 +55,7 @@ var QuoteModel = function ()
     
     this.quotes = ko.observableArray();
 
-    this.quotes(getTestQuotes());
+    this.quotes([]);
     
 
     this.hasClickedTooManyTimes = ko.pureComputed(function () {
@@ -65,7 +73,7 @@ var QuoteModel = function ()
         {
             return this.quotes().filter(function(el)
             {
-                return el.Symbol().toLowerCase().indexOf(this.search().toLowerCase()) > -1;
+                return el().Symbol().toLowerCase().indexOf(this.search().toLowerCase()) > -1;
             }, this);
         }
     }, this);

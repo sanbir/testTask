@@ -25,9 +25,10 @@ namespace TT.Web
 
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                      "~/Scripts/knockout-3.4.0.debug.js"
+                      "~/Scripts/knockout-3.4.0.debug.js",
+                      "~/Scripts/knockout.mapping-latest.debug.js"
                      ));
-
+          
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

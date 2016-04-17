@@ -235,6 +235,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Quote\quote.js" />
     <Content Include="Scripts\Quote\QuoteLoader.js" />

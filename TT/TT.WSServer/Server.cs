@@ -62,6 +62,7 @@ namespace TT.WSServer
                 socket.OnOpen = () =>
                 {
                     ClientInfo.TryAdd(socket.ConnectionInfo.Id, new ClientInfo(socket.ConnectionInfo.Id,socket));
+                    this.NotifySubscribers(_quoteListener.PreviousQuotes);
                 };
 
                 socket.OnError = OnError;
