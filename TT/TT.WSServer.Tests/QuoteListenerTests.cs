@@ -9,9 +9,9 @@ namespace TT.WSServer.Tests
         [TestMethod]
         public void TestListen()
         {
-            var quoteListener = new QuoteListener(new Server());
+            var quoteListener = new QuoteProvider(new Server());
 
-            quoteListener.Listen();
+            quoteListener.Provide();
         }
     }
 }

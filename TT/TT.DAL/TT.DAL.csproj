@@ -73,7 +73,7 @@
     <Compile Include="Repository\BaseMongoRepository.cs" />
     <Compile Include="Repository\QuoteRepository.cs" />
     <Compile Include="Services\IQuoteService.cs" />
-    <Compile Include="Services\QuoteFetcherService.cs" />
+    <Compile Include="Services\QuoteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\packages\MongoRepository.1.6.11\MongoRepository.chm">

@@ -12,13 +12,13 @@ using TT.DAL.Rest;
 
 namespace TT.DAL.Services
 {
-    public class QuoteFetcherService : IQuoteService
+    public class QuoteService : IQuoteService
     {
          
         private const string URI = "http://widgets-m.fxpro.com/api/quotes";
         private AutoMapper.IMapper _mapper;
 
-        public QuoteFetcherService()
+        public QuoteService()
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<QuoteValueRest, QuotePoco>());
             _mapper = config.CreateMapper();

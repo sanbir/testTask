@@ -21,7 +21,7 @@ namespace TT.UnitTests
 
             container.RegisterType<BaseMongoRepository<QuoteEntity>, QuoteRepository>();
             container.RegisterType<IQuoteRepository, QuoteRepository>();
-            container.RegisterType<IQuoteService, QuoteFetcherService>();
+            container.RegisterType<IQuoteService, QuoteService>();
 
             return container;
         }

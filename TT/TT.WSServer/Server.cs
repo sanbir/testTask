@@ -17,13 +17,15 @@ namespace TT.WSServer
 {
     public class Server : IDisposable
     {
-        private readonly IQuoteListener _quoteListener;
+        private readonly IQuoteProvider _quoteProvider;
         private WebSocketServer _server;
 
         
         public Server()
         {
-            _quoteListener = new QuoteListener(this);
+            _quoteProvider = new QuoteProvider(this);
+            IQuoteService quoteService  =new QuoteService();
+            PreviousQuotes = quoteService.GetQuotes();
             FleckLog.LogAction = OverrideFleckLogging;
         }
 
@@ -64,7 +66,7 @@ namespace TT.WSServer
                     Logger.Current.Info(logMessage);
 
 
-                    NotifySubscriber(_quoteListener.PreviousQuotes, clientInfo);
+                    NotifySubscriber(clientInfo);
                     
                 };
 
@@ -85,15 +87,16 @@ namespace TT.WSServer
                 socket.OnMessage = message => OnMessageFromClient(message, socket);
             });
 
-            Task.Run(() => _quoteListener.Listen());
+            Task.Run(() => _quoteProvider.Run());
 
         }
 
-        public void NotifySubscriber(List<QuotePoco> quotes, ClientInfo clientInfo)
+        public void NotifySubscriber(ClientInfo clientInfo)
         {
             try
             {
-               List<QuotePoco> quotesToUser;
+                List<QuotePoco> quotes = PreviousQuotes;
+                List<QuotePoco> quotesToUser;
                 if (String.IsNullOrEmpty(clientInfo.Filter))
                 {
                     quotesToUser = quotes;
@@ -118,19 +121,67 @@ namespace TT.WSServer
             }
         }
 
-        public void NotifySubscribers( List<QuotePoco> quotes)
+        public void ProcessQuotes( List<QuotePoco> quotes)
+        {
+            try
+            {
+                if (ClientInfo.Values.Count < 1)
+                {
+                    return;
+                }
+
+                var quotesToSend = new List<QuotePoco>();
+
+                foreach (var quote in quotes)
+                {
+                    var found = PreviousQuotes.FirstOrDefault(q => q.Symbol == quote.Symbol);
+                    if (found != null)
+                    {
+                        if (!AreEqual(found, quote))
+                        {
+                            quotesToSend.Add(quote);
+                        }
+                    }
+                    else
+                    {
+                        quotesToSend.Add(quote);
+                    }
+                }
+                
+                if (quotesToSend.Count < 1)
+                    return;
+
+                PreviousQuotes = quotes;
+
+                NotifySubscribers();
+               
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Error(ex.Message, ex);
+            }
+        }
+
+        private void NotifySubscribers()
         {
             try
             {
                 foreach (var clientInfo in ClientInfo.Values)
                 {
-                    NotifySubscriber(quotes, clientInfo);
+                    NotifySubscriber(clientInfo);
                 }
             }
             catch (Exception ex)
             {
                 Logger.Current.Error(ex.Message, ex);
             }
+        }
+
+        public List<QuotePoco> PreviousQuotes { get; private set; }
+
+        private bool AreEqual(QuotePoco quote, QuotePoco quote2)
+        {
+            return quote.Ask == quote2.Ask && quote.Bid == quote2.Bid;
         }
 
         private void OnError(Exception x)
@@ -162,7 +213,7 @@ namespace TT.WSServer
                     }
                     else
                     {
-                        NotifySubscriber(_quoteListener.PreviousQuotes, clientInfo);
+                        NotifySubscriber(clientInfo);
                     }
                 }
                 else
