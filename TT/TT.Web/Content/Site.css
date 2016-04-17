@@ -26,3 +26,11 @@ textarea {
 #chart .pair {
     cursor: pointer;
 }
+
+.chartArea {
+     margin-left: 200px;
+}
+
+footer {
+     margin-left: 200px;
+}

@@ -77,6 +77,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoRepository.Net45">
+      <HintPath>..\packages\MongoRepository.1.6.11\lib\net45\MongoRepository.Net45.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -274,6 +277,12 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TT.DAL\TT.DAL.csproj">
+      <Project>{79BBEF24-648C-4222-B54C-89D838F01259}</Project>
+      <Name>TT.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
