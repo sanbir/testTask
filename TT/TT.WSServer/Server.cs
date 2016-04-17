@@ -24,10 +24,7 @@ namespace TT.WSServer
         public Server()
         {
             _quoteListener = new QuoteListener(this);
-            
             FleckLog.LogAction = OverrideFleckLogging;
-
-            //HandleMessageFromClient(new WSClientMessage());
         }
 
         private void OverrideFleckLogging(LogLevel level, string message, Exception ex)
@@ -35,7 +32,7 @@ namespace TT.WSServer
             switch (level)
             {
                 case LogLevel.Debug:
-                    //_logger.Debug(message, ex); //Fleck prints a lot of DEBUG 
+                    // Logger.Current.Info(message);//Fleck prints a lot of DEBUG  
                     break;
                 case LogLevel.Error:
                     Logger.Current.Error(message, ex);
@@ -49,7 +46,7 @@ namespace TT.WSServer
             }
         }
 
-        public static readonly ConcurrentDictionary<Guid, ClientInfo> ClientInfo = new ConcurrentDictionary<Guid, ClientInfo>();
+        public readonly ConcurrentDictionary<Guid, ClientInfo> ClientInfo = new ConcurrentDictionary<Guid, ClientInfo>();
 
         public void Initialize()
         {
@@ -60,17 +57,29 @@ namespace TT.WSServer
             {
                 socket.OnOpen = () =>
                 {
-                    ClientInfo.TryAdd(socket.ConnectionInfo.Id, new ClientInfo(socket.ConnectionInfo.Id,socket));
-                    this.NotifySubscribers(_quoteListener.PreviousQuotes);
+                    var clientInfo = new ClientInfo(socket.ConnectionInfo.Id, socket);
+                    ClientInfo.TryAdd(socket.ConnectionInfo.Id, clientInfo);
+
+                    var logMessage = "New client connected succesfully. id = " + clientInfo.ConnectionGuid;
+                    Logger.Current.Info(logMessage);
+
+
+                    NotifySubscriber(_quoteListener.PreviousQuotes, clientInfo);
+                    
                 };
 
                 socket.OnError = OnError;
 
                 socket.OnClose = () =>
                 {
+                   
                     var found = ClientInfo.FirstOrDefault(ci => ci.Key == socket.ConnectionInfo.Id).Value;
-                    if(found != null)
-                    ClientInfo.TryRemove(socket.ConnectionInfo.Id, out found);
+                    if (found != null)
+                    {
+                        ClientInfo.TryRemove(socket.ConnectionInfo.Id, out found);
+                        var logMessage = "Client disconnected. id = " + found.ConnectionGuid;
+                        Logger.Current.Info(logMessage);
+                    }
                 };
 
                 socket.OnMessage = message => OnMessageFromClient(message, socket);
@@ -80,26 +89,42 @@ namespace TT.WSServer
 
         }
 
+        public void NotifySubscriber(List<QuotePoco> quotes, ClientInfo clientInfo)
+        {
+            try
+            {
+               List<QuotePoco> quotesToUser;
+                if (String.IsNullOrEmpty(clientInfo.Filter))
+                {
+                    quotesToUser = quotes;
+                }
+                else
+                {
+                    quotesToUser = quotes.Where(quote => quote.Symbol.ToLower().Contains(clientInfo.Filter.ToLower())).ToList();
+                }
+
+                string message = JsonConvert.SerializeObject(quotesToUser);
+
+                clientInfo.Connection.Send(message);
+
+                var logMessage = "Data was sent to client = " + clientInfo.ConnectionGuid + ".\n Number of quotes is " + quotesToUser.Count;
+
+                Logger.Current.Info(logMessage);
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Error(ex.Message, ex);
+            }
+        }
+
         public void NotifySubscribers( List<QuotePoco> quotes)
         {
             try
             {
                 foreach (var clientInfo in ClientInfo.Values)
                 {
-                    
-                    List<QuotePoco> quotesToUser;
-                    if (String.IsNullOrEmpty(clientInfo.Filter))
-                    {
-                        quotesToUser = quotes;
-                    }
-                    else
-                    {
-                        quotesToUser = quotes.Where(quote => quote.Symbol.ToLower().Contains(clientInfo.Filter.ToLower())).ToList();
-                    }
-                    
-                    string message = JsonConvert.SerializeObject(quotesToUser);
-
-                    clientInfo.Connection.Send(message);
+                    NotifySubscriber(quotes, clientInfo);
                 }
             }
             catch (Exception ex)
@@ -118,17 +143,26 @@ namespace TT.WSServer
             IPAddress ip;
             if (IPAddress.TryParse(socket.ConnectionInfo.ClientIpAddress, out ip))
             {
-
-                if (Server.ClientInfo.ContainsKey(socket.ConnectionInfo.Id))
+                if (ClientInfo.ContainsKey(socket.ConnectionInfo.Id))
                 {
-                    var clientInfo = Server.ClientInfo[socket.ConnectionInfo.Id];
+                    var clientInfo = ClientInfo[socket.ConnectionInfo.Id];
 
                     var oldFilter = clientInfo.Filter;
                     clientInfo.Filter = requestMessage;
 
+                    var logMessage = "Client has applied a new filter. ClientID = " + clientInfo.ConnectionGuid +
+                                     ". Filter = " + clientInfo.Filter;
+
+                    Logger.Current.Info(logMessage);
+
+
                     if (String.IsNullOrEmpty(oldFilter) || clientInfo.Filter.ToLower().Contains(oldFilter.ToLower()))
                     {
-                        
+                        return;
+                    }
+                    else
+                    {
+                        NotifySubscriber(_quoteListener.PreviousQuotes, clientInfo);
                     }
                 }
                 else
