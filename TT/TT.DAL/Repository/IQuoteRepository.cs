@@ -11,6 +11,9 @@ namespace TT.DAL.Repository
     public interface IQuoteRepository
     {
         void Add(IEnumerable<QuotePoco> quotes);
+
+        void RemoveUntil(DateTime time);
+
         List<QuotePoco> Get(string SymbolName);
     }
 }
