@@ -64,6 +64,20 @@ var QuoteModel = function ()
 
     this.search = ko.observable(null);
 
+
+    this.sendFilterTimeout = null;
+
+    this.search.subscribe(function(newValue)
+    {
+        if (self.sendFilterTimeout)
+        {
+            clearTimeout(self.sendFilterTimeout);
+        }
+        self.sendFilterTimeout = setTimeout(function () { ws.send(newValue); }, 3000);
+    });
+
+
+
     this.filteredQuotes = ko.pureComputed(function()
     {
         if (!this.search() || this.search() == '')

@@ -11,7 +11,7 @@ using TT.Core.Logger;
 using TT.Core.Settings;
 using TT.DAL.Pocos;
 using TT.DAL.Services;
-using TT.WSServer.DTO;
+
 
 namespace TT.WSServer
 {
@@ -21,7 +21,6 @@ namespace TT.WSServer
         private WebSocketServer _server;
 
         
-
         public Server()
         {
             _quoteListener = new QuoteListener(this);
@@ -119,13 +118,21 @@ namespace TT.WSServer
             IPAddress ip;
             if (IPAddress.TryParse(socket.ConnectionInfo.ClientIpAddress, out ip))
             {
-                WSClientMessage msg = new WSClientMessage()
+
+                if (Server.ClientInfo.ContainsKey(socket.ConnectionInfo.Id))
                 {
-                    RawMessage = requestMessage,
-                    ConnectionGuid = socket.ConnectionInfo.Id,
-                    ClientIP = ip.GetAddressBytes(),
-                    ClientIPString = socket.ConnectionInfo.ClientIpAddress
-                };
+                    var clientInfo = Server.ClientInfo[socket.ConnectionInfo.Id];
+
+                    var oldFilter = clientInfo.Filter;
+                    clientInfo.Filter = requestMessage;
+
+                   // if(String.IsNullOrEmpty(oldFilter) || )
+                }
+                else
+                {
+                    Logger.Current.Info(
+                    $"Unable to find a client with connectionInfoID = {socket.ConnectionInfo.Id} from req msg {requestMessage}");
+                }
                 
             }
             else
