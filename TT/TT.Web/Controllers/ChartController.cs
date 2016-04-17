@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -26,10 +27,17 @@ namespace TT.Web.Controllers
             return View();
         }
 
+        [OutputCache(Duration = 60*60)]
         public JsonResult GetCurrencyList()
         {
             var currencyList = _quoteRepository.GetCurrencyList();
-            return Json(currencyList);
+            return Json(currencyList, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetChartData(String symbol)
+        {
+            var chartData = _quoteRepository.Get(symbol, DateTime.UtcNow.AddHours(-1));
+            return Json(chartData, JsonRequestBehavior.AllowGet);
         }
 
     }

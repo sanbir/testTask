@@ -13,45 +13,90 @@ var getTestPairs = function () {
     return result;
 };
 
-var loadPairs = function()
+var getShortTime = function(time)
 {
-    var def = $.Deferred();
+    var result = (time.getMonth() + 1) + "-" + time.getDate() + "-" + time.getFullYear() + "   " +
+    time.getHours() + ":" + time.getMinutes();
+
+    return result;
+}
 
 
-    $.ajax({
-        url: "Chart/GetCurrencyList",
-        success:  function(data)
-        {
-            alert("success");
-            def.resolve(data);
-        },
-        error: function (a, b, c) {
-            alert("error");
-        },
-        contentType: "application/json; charset=utf-8"
-    });
+var server =  {
+            loadPairs: function () {
+                var def = $.Deferred();
+
+                $.ajax({
+                    url: "Chart/GetCurrencyList",
+                    success: function (data) {
+                       def.resolve(data);
+                    },
+                    error: function (a, b, c) {
+                        alert("error");
+                    },
+                    contentType: "application/json; charset=utf-8"
+                });
 
 
-/*    $.get("Chart/GetCurrencyList", function(data)
-        {
-            alert("success");
-            def.resolve(data);
-        })
-        .done(function()
-        {
-            alert("second success");
-        })
-        .fail(function(a,b,c)
-        {
-            alert("error");
-        })
-        .always(function()
-        {
-            alert("finished");
-        });*/
+                return def;
+            },
+            loadChartData: function(symbol)
+            {
+                var def = $.Deferred();
 
-    return def;
-};
+                $.ajax({
+                    url: "Chart/GetChartData",
+                    success: function (response)
+                    {
+                        response = ChartTools().multiSparse(response, 15);
+
+                        var labels = [];
+                        var data = [];
+
+                        for (var j = 0; j < response.length; j++)
+                        {
+                            var parsedTime = new Date(response[j].Time.match(/\d+/)[0] * 1);
+                            labels.push(parsedTime.toLocaleTimeString());
+                            data.push(response[j].Bid);
+                        }
+
+                        var result = {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: "test dataset",
+                                    fillColor: "rgba(220,220,220,0.2)",
+                                    strokeColor: "rgba(220,220,220,1)",
+                                    pointColor: "rgba(220,220,220,1)",
+                                    pointStrokeColor: "#fff",
+                                    pointHighlightFill: "#fff",
+                                    pointHighlightStroke: "rgba(220,220,220,1)",
+                                    data: data
+                                }
+                            ]
+
+                        };
+
+                        def.resolve(result);
+                        
+                    },
+                    error: function (a, b, c) {
+                        alert("error");
+                    },
+                    data: symbol,
+                    contentType: "application/json; charset=utf-8"
+                });
+
+
+                return def;
+            }
+            
+    };
+
+
+
+
+
 
 /*var updateChartData = function()
 {
@@ -75,16 +120,27 @@ var ChartModel = function ()
     
     this.pairs = ko.observableArray([]);
 
-    loadPairs().done(
-        function(result)
-        {
-            for (var i = 0; i < result.length; i++)
-            {
-                self.pairs.push(new Pair(result[i]));
-            }
-        }
-    );
    
+
+    this.load = function()
+    {
+        var def = $.Deferred();
+
+       server.loadPairs().done(
+       function (result) {
+           for (var i = 0; i < result.length; i++) {
+               self.pairs.push(new Pair(result[i]));
+           }
+
+           if (self.pairs().length > 0)
+               self.selectedPair(self.pairs()[0]);
+
+           def.resolve();
+       }
+   );
+
+        return def;
+    };
 
 
     this.chart = null;
@@ -93,11 +149,17 @@ var ChartModel = function ()
         if (self.chart) {
             self.chart.destroy();
         }
-        var ctx = document.getElementById("canvas").getContext("2d");
-        var lineChartData = ChartTools().GetTestChartData();
-        self.chart = new Chart(ctx).Line(lineChartData, {
-            responsive: true
-        });
+
+        server.loadChartData(pair).done(function (result)   //ChartTools().GetTestChartData();
+        {
+            var lineChartData = result;
+            var ctx = document.getElementById("canvas").getContext("2d");
+            self.chart = new Chart(ctx).Line(lineChartData, {
+                responsive: true
+            });
+        }); 
+        
+      
 
     };
 
@@ -136,5 +198,11 @@ var ChartModel = function ()
 };
 
 
+var chartModel = new ChartModel();
 
-ko.applyBindings(new ChartModel(), document.getElementById("chart"));
+chartModel.load().done(function()
+    {
+    ko.applyBindings(chartModel, document.getElementById("chart"));
+    }
+);
+

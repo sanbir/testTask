@@ -1,6 +1,28 @@
 ﻿var ChartTools = function()
 {
     var result = {};
+
+    result.sparse = function(marketData)
+    {
+        var result = [];
+        for (var i = 0; i < marketData.length - 1; i = i + 2)
+        {
+            var newValue = (marketData[i].Bid + marketData[i + 1].Bid) / 2;
+            result.push(new MarketData(marketData[i].Time, newValue));
+        }
+        return result;
+    };
+
+    result.multiSparse = function(marketData, pointsLimit)
+    {
+        while (marketData.length > pointsLimit)
+        {
+            marketData = result.sparse(marketData);
+        }
+
+        return marketData;
+    };
+
     result.GetTestChartData = function()
     {
         var random = function () { return Math.round(Math.random()*2 - 1) }; //from -1 to 1
@@ -27,29 +49,8 @@
 
         var marketData = init();
 
-        var sparse = function(marketData)
-        {
-            var result = [];
-            for (var i = 0; i < marketData.length - 1; i=i+2)
-            {
-                var newValue = (marketData[i].Bid + marketData[i + 1].Bid) / 2;
-                result.push(new MarketData(marketData[i].Date, newValue));
-            }
-            return result;
-        }
-
-        var multiSparse = function (marketData, n)
-        {
-            var result = marketData;
-            for (var i = 0; i < n; i++)
-            {
-                result = sparse(result);
-            }
-            return result;
-        }
-
-
-        marketData = multiSparse(marketData, 5);
+        
+        marketData = result.multiSparse(marketData, 5);
 
         var labels = [];
         var data = [];
@@ -79,10 +80,6 @@
         };
     }
 
-    result.GetChartData = function (marketData)
-    {
-        return null;
-    }
-
+    
     return result;
 }

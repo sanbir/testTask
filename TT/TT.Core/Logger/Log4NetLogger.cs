@@ -8,16 +8,12 @@ namespace TT.Core.Logger
     public class Log4NetLogger : ILogger
     {
         private ILog instance;
-        public Log4NetLogger(string logName = "default", bool useSharedConfig = false)
+        public Log4NetLogger(string logName = "default")
         {
             this.instance = LogManager.GetLogger(logName);
-
-            if(useSharedConfig)
-            log4net.Config.XmlConfigurator.Configure(new FileInfo(SharedConfiguration.Instance.FilePath));
-            else
-            {
-                log4net.Config.XmlConfigurator.Configure();
-            }
+            
+            log4net.Config.XmlConfigurator.Configure();
+          
         }
 
         public void Info(string message)

@@ -48,7 +48,6 @@
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\TTSettings.cs" />
-    <Compile Include="Settings\SharedConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

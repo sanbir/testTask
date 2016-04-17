@@ -12,23 +12,7 @@ namespace TT.Core.Settings
             get { return GetAppSetting("MongoConnectionString", "mongodb://tt_user:tt_pass_4371@virtualbox.asuscomm.com:32500/TT"); }
         }
 
-      /*  private static string Get(string settingName)
-        {
-            var configInstance = SharedConfiguration.Instance;
-            var setting = configInstance.AppSettings.Settings[settingName];
-            return setting.Value;
-        }
-
-        private static int GetInt(string settingName)
-        {
-            return Convert.ToInt32(SharedConfiguration.Instance.AppSettings.Settings[settingName].Value);
-        }
-
-        private static bool GetBoolean(string settingName)
-        {
-            return Convert.ToBoolean(SharedConfiguration.Instance.AppSettings.Settings[settingName].Value);
-        }*/
-
+        
         /// <summary>
         /// Gets a value from the AppSettings config section, casted to type T
         /// </summary>
