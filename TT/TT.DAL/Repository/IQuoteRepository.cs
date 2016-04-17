@@ -15,5 +15,7 @@ namespace TT.DAL.Repository
         void RemoveUntil(DateTime time);
 
         List<QuotePoco> Get(string symbol);
+
+        List<QuotePoco> Get(string symbol, DateTime timeToGetAfter);
     }
 }

@@ -39,5 +39,14 @@ namespace TT.DAL.Repository
 
             return quotePocos;
         }
+
+        public List<QuotePoco> Get(string symbol, DateTime timeToGetAfter)
+        {
+            List<QuoteEntity> quoteEntities =
+                this.Collection.AsQueryable().Where(quoteData => quoteData.Symbol == symbol && quoteData.Time > timeToGetAfter).ToList();
+            List<QuotePoco> quotePocos = quoteEntities.Select(Map<QuotePoco>).ToList();
+
+            return quotePocos;
+        }
     }
 }
