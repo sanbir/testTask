@@ -79,9 +79,9 @@ namespace TT.WSServer
                 var quotes = _quoteService.GetQuotes();
 
                 Task.Run(() => NotifySubscribers(quotes));
-               // Task.Run(() => UpdateDatabase(quotes));
+                Task.Run(() => UpdateDatabase(quotes));
             }
-            }
+        }
 
         private void RemoveOldFromDatabase()
         {
