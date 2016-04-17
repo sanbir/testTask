@@ -29,11 +29,9 @@ namespace TT.WSServer
         {
         }
 
-
-        private void UpdateDatabase(List<QuotePoco> quotes)
+        private void AddNewToDatabase(List<QuotePoco> quotes)
         {
             _quoteRepository.Add(quotes);
-
         }
 
         private void NotifySubscribers(List<QuotePoco> quotes)
@@ -75,8 +73,16 @@ namespace TT.WSServer
                 var quotes = _quoteService.GetQuotes();
 
                 Task.Run(() => NotifySubscribers(quotes));
-           //     Task.Run(() => UpdateDatabase(quotes));
+                Task.Run(() => AddNewToDatabase(quotes));
+                Task.Run(() => RemoveOldFromDatabase());
             }
+            }
+
+        private void RemoveOldFromDatabase()
+        {
+            var hour = new TimeSpan(0, 1, 0, 0);
+
+            _quoteRepository.RemoveUntil(DateTime.UtcNow - hour);
         }
 
         public List<QuotePoco> PreviousQuotes { get; private set; }

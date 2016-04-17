@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
 using MongoRepository;
 using TT.DAL.Entity;
@@ -31,6 +34,11 @@ namespace TT.DAL.Repository
                 var quouteToDb = _mapperQuoteEntity.Map<QuoteEntity>(quote);
                 this.Collection.Save(quouteToDb);
             }
+        }
+
+        public void RemoveUntil(DateTime time)
+        {
+            collection.Remove(Query<QuoteEntity>.Where(entity => entity.Time < time));
         }
 
         public List<QuotePoco> Get(string SymbolName)
