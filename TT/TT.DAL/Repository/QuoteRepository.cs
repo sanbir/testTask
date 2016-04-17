@@ -19,11 +19,7 @@ namespace TT.DAL.Repository
 
         public void Add(IEnumerable<QuotePoco> quotes)
         {
-            foreach (var quote in quotes)
-            {
-                var quouteToDb = Map<QuoteEntity>(quote);
-                this.Collection.Save(quouteToDb);
-            }
+            this.Collection.InsertBatch(quotes);
         }
 
         public void RemoveUntil(DateTime time)
