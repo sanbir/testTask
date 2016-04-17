@@ -32,20 +32,31 @@ namespace TT.UnitTests.DAL
                     ChangePercent = 42,
                     ChangePoints = 100500,
                     Symbol = Symbol
-                }
+                },
+                new QuotePoco
+                {
+                    Time = time,
+                    Bid = 50M,
+                    Ask = 9000M,
+                    ChangePercent = 42,
+                    ChangePoints = 100500,
+                    Symbol = Symbol
+                },
             };
 
             quoteService.Add(quotes);
 
-            var fromDb = quoteService.Get(Symbol).FirstOrDefault(poco => (poco.Time - time).Duration() < new TimeSpan(0,0,0,1));
+            var fromDb = quoteService.Get(Symbol).Where(poco => (poco.Time - time).Duration() < new TimeSpan(0,0,0,1)).ToList();
 
-            Assert.IsNotNull(fromDb);
+            Assert.IsNotNull(fromDb.FirstOrDefault());
+
+            Assert.AreEqual(fromDb.Count, 2);
 
             quoteService.RemoveUntil(time.AddMinutes(10));
 
-            fromDb = quoteService.Get(Symbol).FirstOrDefault(poco => (poco.Time - time).Duration() < new TimeSpan(0, 0, 0, 1));
+            fromDb = quoteService.Get(Symbol).Where(poco => (poco.Time - time).Duration() < new TimeSpan(0, 0, 0, 1)).ToList();
 
-            Assert.IsNull(fromDb);
+            Assert.IsNull(fromDb.FirstOrDefault());
         }
 
         [TestMethod]
