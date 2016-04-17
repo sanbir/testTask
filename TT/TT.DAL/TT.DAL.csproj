@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\QuoteEntity.cs" />
+    <Compile Include="Extensions\AutoMapperExtensions.cs" />
     <Compile Include="Pocos\QuotePoco.cs" />
     <Compile Include="Repository\IQuoteRepository.cs" />
     <Compile Include="Rest\QuoteRest.cs" />

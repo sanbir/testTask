@@ -12,8 +12,8 @@ namespace TT.DAL.Entity
     {
         //"S": "EURJPY", - symbol name
         //"B": 126.831, - bid value
-        public string SymbolName { get; set; }
-        public decimal BidValue { get; set; }
+        public string Symbol { get; set; }
+        public decimal Bid { get; set; }
         public DateTime Time { get; set; }
     }
 }

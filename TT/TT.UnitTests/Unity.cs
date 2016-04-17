@@ -20,6 +20,7 @@ namespace TT.UnitTests
             var container = new UnityContainer();
 
             container.RegisterType<BaseMongoRepository<QuoteEntity>, QuoteRepository>();
+            container.RegisterType<IQuoteRepository, QuoteRepository>();
             container.RegisterType<IQuoteService, QuoteFetcherService>();
 
             return container;

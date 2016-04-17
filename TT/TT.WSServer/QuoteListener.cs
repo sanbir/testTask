@@ -81,7 +81,7 @@ namespace TT.WSServer
                 Task.Run(() => NotifySubscribers(quotes));
                 Task.Run(() => UpdateDatabase(quotes));
             }
-            }
+        }
 
         private void RemoveOldFromDatabase()
         {
