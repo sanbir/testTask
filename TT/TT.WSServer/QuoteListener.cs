@@ -18,9 +18,11 @@ namespace TT.WSServer
         {
             _webSocketServer = webSocketServer;
             _quoteService = new QuoteFetcherService();
+
+            PreviousQuotes = _quoteService.GetQuotes();
         }
 
-        private List<QuotePoco> _previousQuotes = new List<QuotePoco>(); 
+        
 
         public void Listen()
         {
@@ -40,7 +42,7 @@ namespace TT.WSServer
 
                 foreach (var quote in quotes)
                 {
-                    var found = _previousQuotes.FirstOrDefault(q => q.Symbol == quote.Symbol);
+                    var found = PreviousQuotes.FirstOrDefault(q => q.Symbol == quote.Symbol);
                     if (found != null)
                     {
                         if (!AreEqual(found, quote))
@@ -54,11 +56,13 @@ namespace TT.WSServer
                     }
                 }
 
-                _previousQuotes = quotes;
-
+                PreviousQuotes = quotes;
+                if(quotesToSend.Count > 0)
                 _webSocketServer.NotifySubscribers(quotesToSend);
             }
         }
+
+        public List<QuotePoco> PreviousQuotes { get; private set;}
 
         private bool AreEqual(QuotePoco quote, QuotePoco quote2)
         {
