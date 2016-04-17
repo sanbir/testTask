@@ -29,8 +29,12 @@ namespace TT.WebSocketPublisher
 
             try
             {
-                _fleckServer = new Server();
-                _fleckServer.Initialize();
+                Task.Run(() =>
+                {
+                    _fleckServer = new Server();
+                    _fleckServer.Initialize();
+                }
+                    );
                 Logger.Current.Info("--SERVICE STARTED--");
             }
             catch (Exception ex)

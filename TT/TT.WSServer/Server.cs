@@ -85,7 +85,7 @@ namespace TT.WSServer
                 socket.OnMessage = message => OnMessageFromClient(message, socket);
             });
 
-            _quoteListener.Listen();
+            Task.Run(() => _quoteListener.Listen());
 
         }
 

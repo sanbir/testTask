@@ -17,11 +17,7 @@ namespace TT.WebSocketPublisher
 
             var service = new PublisherWinService();
 
-            var onStartMethod = typeof (ServiceBase).GetMethod("OnStart",
-                BindingFlags.Instance | BindingFlags.NonPublic);
-                onStartMethod.Invoke(service, new object[] { new string[] { } });
-
-            Console.ReadLine();
+            ServiceBase.Run(service);
         }
 
         private static void RegisterUnity()
