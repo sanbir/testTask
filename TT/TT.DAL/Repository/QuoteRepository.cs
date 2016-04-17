@@ -48,5 +48,14 @@ namespace TT.DAL.Repository
 
             return quotePocos;
         }
+
+        public List<string> GetCurrencyList()
+        {
+            List<String> currencyList =
+               this.Collection.AsQueryable().ToList().GroupBy(q => q.Symbol, (k, g) => k).ToList();
+ 
+
+            return currencyList;
+        }
     }
 }

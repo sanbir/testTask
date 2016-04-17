@@ -13,6 +13,30 @@ var getTestPairs = function () {
     return result;
 };
 
+var loadPairs = function()
+{
+    var def = $.Deferred();
+
+    $.get("Chart/GetCurrencyList", function(data)
+        {
+            alert("success");
+            def.resolve(data);
+        })
+        .done(function()
+        {
+            alert("second success");
+        })
+        .fail(function()
+        {
+            alert("error");
+        })
+        .always(function()
+        {
+            alert("finished");
+        });
+
+    return def;
+};
 
 /*var updateChartData = function()
 {
@@ -34,9 +58,18 @@ var ChartModel = function ()
     var self = this;
 
     
-    this.pairs = ko.observableArray();
+    this.pairs = ko.observableArray([]);
 
-    this.pairs(getTestPairs());
+    loadPairs().done(
+        function(result)
+        {
+            for (var i = 0; i < result.length; i++)
+            {
+                self.pairs.push(new Pair(result[i]));
+            }
+        }
+    );
+   
 
 
     this.chart = null;

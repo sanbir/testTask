@@ -26,10 +26,11 @@ namespace TT.Web.Controllers
             return View();
         }
 
-      /*  public JsonResult GetCurrencyList()
+        public JsonResult GetCurrencyList()
         {
-            _quoteRepository.Get()
+            var currencyList = _quoteRepository.GetCurrencyList();
+            return Json(currencyList);
         }
-*/
+
     }
 }

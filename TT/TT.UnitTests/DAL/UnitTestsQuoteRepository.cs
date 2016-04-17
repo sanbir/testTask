@@ -17,7 +17,7 @@ namespace TT.UnitTests.DAL
         private const string Symbol = "EURUSD";
 
         [TestMethod]
-        public void Test()
+        public void TestReadWriteDelete()
         {
             var quoteService = Unity.Container.Resolve<IQuoteRepository>();
             var time = DateTime.UtcNow.AddHours(-2);
@@ -46,6 +46,17 @@ namespace TT.UnitTests.DAL
             fromDb = quoteService.Get(Symbol).FirstOrDefault(poco => (poco.Time - time).Duration() < new TimeSpan(0, 0, 0, 1));
 
             Assert.IsNull(fromDb);
+        }
+
+        [TestMethod]
+        public void TestGetCurrencyList()
+        {
+            var quoteService = Unity.Container.Resolve<IQuoteRepository>();
+
+            var list = quoteService.GetCurrencyList();
+            
+            Assert.AreNotEqual(0, list.Count);
+            
         }
     }
 }

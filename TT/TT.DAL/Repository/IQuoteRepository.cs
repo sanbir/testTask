@@ -17,5 +17,7 @@ namespace TT.DAL.Repository
         List<QuotePoco> Get(string symbol);
 
         List<QuotePoco> Get(string symbol, DateTime timeToGetAfter);
+
+        List<String> GetCurrencyList();
     }
 }
