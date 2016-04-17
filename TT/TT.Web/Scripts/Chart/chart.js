@@ -17,7 +17,22 @@ var loadPairs = function()
 {
     var def = $.Deferred();
 
-    $.get("Chart/GetCurrencyList", function(data)
+
+    $.ajax({
+        url: "Chart/GetCurrencyList",
+        success:  function(data)
+        {
+            alert("success");
+            def.resolve(data);
+        },
+        error: function (a, b, c) {
+            alert("error");
+        },
+        contentType: "application/json; charset=utf-8"
+    });
+
+
+/*    $.get("Chart/GetCurrencyList", function(data)
         {
             alert("success");
             def.resolve(data);
@@ -26,14 +41,14 @@ var loadPairs = function()
         {
             alert("second success");
         })
-        .fail(function()
+        .fail(function(a,b,c)
         {
             alert("error");
         })
         .always(function()
         {
             alert("finished");
-        });
+        });*/
 
     return def;
 };

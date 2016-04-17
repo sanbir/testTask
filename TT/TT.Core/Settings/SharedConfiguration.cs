@@ -7,7 +7,7 @@ namespace TT.Core.Settings
 {
     public class SharedConfiguration
     {
-        public static readonly Configuration Instance = GetConfiguration("../../../TT.Core/shared.config");
+        public static readonly Configuration Instance = GetConfiguration("../../TT.Core/shared.config");
 
         private static Configuration GetConfiguration(string configFileName)
         {
@@ -15,6 +15,7 @@ namespace TT.Core.Settings
             {
                 var exeConfigurationFileMap = new ExeConfigurationFileMap();
                 var uri = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase));
+                
                 exeConfigurationFileMap.ExeConfigFilename = Path.Combine(uri.LocalPath, configFileName);
                 return ConfigurationManager.OpenMappedExeConfiguration(exeConfigurationFileMap, ConfigurationUserLevel.None);
             }
