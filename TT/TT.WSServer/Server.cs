@@ -126,7 +126,10 @@ namespace TT.WSServer
                     var oldFilter = clientInfo.Filter;
                     clientInfo.Filter = requestMessage;
 
-                   // if(String.IsNullOrEmpty(oldFilter) || )
+                    if (String.IsNullOrEmpty(oldFilter) || clientInfo.Filter.ToLower().Contains(oldFilter.ToLower()))
+                    {
+                        
+                    }
                 }
                 else
                 {
