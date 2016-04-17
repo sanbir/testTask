@@ -23,7 +23,9 @@ namespace TT.WebSocketPublisher
             container.RegisterType<IQuoteService, QuoteFetcherService>();
 
             container.RegisterType<IQuoteListener, QuoteListener>();
-            
+
+            container.RegisterType<IQuoteRepository, QuoteRepository>();
+
             return container;
         }
     }

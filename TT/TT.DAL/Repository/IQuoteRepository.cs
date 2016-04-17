@@ -8,7 +8,7 @@ using TT.DAL.Pocos;
 
 namespace TT.DAL.Repository
 {
-    interface IQuoteRepository
+    public interface IQuoteRepository
     {
         void Add(IEnumerable<QuotePoco> quotes);
         List<QuotePoco> Get(string SymbolName);
