@@ -6,11 +6,11 @@ using TT.DAL.Services;
 
 namespace TT.MarketDataService
 {
-    partial class PublisherWinService : ServiceBase
+    partial class MarketDataWinService : ServiceBase
     {
         private MarketDataUpdater.MarketDataUpdater _marketDataUpdater;
         private IQuoteProvider _quoteProvider;
-        public PublisherWinService()
+        public MarketDataWinService()
         {
             InitializeComponent();
         }

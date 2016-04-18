@@ -12,7 +12,7 @@ namespace TT.MarketDataService
         /// </summary>
         static void Main()
         {
-            var service = new PublisherWinService();
+            var service = new MarketDataWinService();
 
             var onStartMethod = typeof(ServiceBase).GetMethod("OnStart",
                 BindingFlags.Instance | BindingFlags.NonPublic);

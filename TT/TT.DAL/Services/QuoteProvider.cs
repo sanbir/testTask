@@ -8,23 +8,20 @@ namespace TT.DAL.Services
     public class QuoteProvider : IQuoteProvider
     {
         private readonly IQuoteService _quoteService;
-        private readonly IQuoteSubscriber _webSocketServer;
-        
+        private readonly IQuoteSubscriber _quoteSubscriber;
         
 
-        public QuoteProvider(IQuoteService quoteService, IQuoteSubscriber webSocketServer )
+        public QuoteProvider(IQuoteService quoteService, IQuoteSubscriber quoteSubscriber)
         {
             _quoteService = quoteService;
-            _webSocketServer = webSocketServer;
+            _quoteSubscriber = quoteSubscriber;
         }
 
-        public QuoteProvider(IQuoteSubscriber server) : this(new QuoteService(), server)
+        public QuoteProvider(IQuoteSubscriber quoteSubscriber) : this(new QuoteService(), quoteSubscriber)
         {
         }
 
         
-        
-
         public void Run()
         {
             while (true)
@@ -40,13 +37,8 @@ namespace TT.DAL.Services
 
         public void Provide(List<QuotePoco> quotes )
         {
-           Task.Run(() => _webSocketServer.ProcessQuotes(quotes));
+           Task.Run(() => _quoteSubscriber.ProcessQuotes(quotes));
         }
-
-        
-
-        
-
         
     }
 }
