@@ -5,23 +5,6 @@ var Pair = function (symbol) {
    };
 
 
-var getTestPairs = function () {
-    var result = [];
-    result.push(new Pair("usdeur"));
-    result.push(new Pair("gbpusd"));
-    result.push(new Pair("usdcad"));
-    return result;
-};
-
-var getShortTime = function(time)
-{
-    var result = (time.getMonth() + 1) + "-" + time.getDate() + "-" + time.getFullYear() + "   " +
-    time.getHours() + ":" + time.getMinutes();
-
-    return result;
-}
-
-
 var server =  {
             loadPairs: function () {
                 var def = $.Deferred();
@@ -92,10 +75,6 @@ var server =  {
             }
             
     };
-
-
-
-
 
 
 /*var updateChartData = function()
