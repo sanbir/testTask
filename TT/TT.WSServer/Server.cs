@@ -52,7 +52,7 @@ namespace TT.WSServer
 
         public void Initialize()
         {
-            string location = TTSettings.GetAppSetting<string>("hostingUrl", defaultVal: "ws://0.0.0.0:8080");
+            string location = TTSettings.GetAppSetting<string>("hostingUrl", defaultVal: "ws://0.0.0.0:8082");
             _server = new WebSocketServer(location);
 
             _server.Start(socket =>
@@ -66,7 +66,7 @@ namespace TT.WSServer
                     Logger.Current.Info(logMessage);
 
 
-                    NotifySubscriber(clientInfo);
+                    NotifySubscriber(PreviousQuotes, clientInfo);
                     
                 };
 
@@ -91,11 +91,11 @@ namespace TT.WSServer
 
         }
 
-        public void NotifySubscriber(ClientInfo clientInfo)
+        public void NotifySubscriber(List<QuotePoco> quotesToSend, ClientInfo clientInfo)
         {
             try
             {
-                List<QuotePoco> quotes = PreviousQuotes;
+                List<QuotePoco> quotes = quotesToSend;
                 List<QuotePoco> quotesToUser;
                 if (String.IsNullOrEmpty(clientInfo.Filter))
                 {
@@ -153,7 +153,7 @@ namespace TT.WSServer
 
                 PreviousQuotes = quotes;
 
-                NotifySubscribers();
+                NotifySubscribers(quotesToSend);
                
             }
             catch (Exception ex)
@@ -162,13 +162,13 @@ namespace TT.WSServer
             }
         }
 
-        private void NotifySubscribers()
+        private void NotifySubscribers(List<QuotePoco> quotesToSend)
         {
             try
             {
                 foreach (var clientInfo in ClientInfo.Values)
                 {
-                    NotifySubscriber(clientInfo);
+                    NotifySubscriber(quotesToSend, clientInfo);
                 }
             }
             catch (Exception ex)
@@ -213,7 +213,7 @@ namespace TT.WSServer
                     }
                     else
                     {
-                        NotifySubscriber(clientInfo);
+                        NotifySubscriber(PreviousQuotes, clientInfo);
                     }
                 }
                 else

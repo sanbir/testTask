@@ -13,16 +13,17 @@ namespace TT.WebSocketPublisher
     {
         private static void Main(string[] args)
         {
-            //RegisterUnity();
-
+           
             var service = new PublisherWinService();
 
-            ServiceBase.Run(service);
+            var onStartMethod = typeof(ServiceBase).GetMethod("OnStart",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+            onStartMethod.Invoke(service, new object[] { new string[] { } });
+       
+            
+            /*
+                        ServiceBase.Run(service);*/
         }
 
-        private static void RegisterUnity()
-        {
-            //Unity.Container.Resolve()
-        }
     }
 }

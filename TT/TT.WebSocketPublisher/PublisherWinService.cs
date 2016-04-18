@@ -36,6 +36,10 @@ namespace TT.WebSocketPublisher
                 }
                     );
                 Logger.Current.Info("--SERVICE STARTED--");
+
+
+                //console mode:
+                Console.ReadLine();
             }
             catch (Exception ex)
             {

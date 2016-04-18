@@ -11,7 +11,7 @@ namespace TT.WSServer.Tests
         {
             var quoteListener = new QuoteProvider(new Server());
 
-            quoteListener.Provide();
+            quoteListener.Run();
         }
     }
 }
