@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TT.Core.Logger;
 using TT.DAL.Pocos;
 using TT.DAL.Repository;
 using TT.DAL.Services;
@@ -34,6 +35,8 @@ namespace TT.MarketDataUpdater
         private void AddNewToDatabase(List<QuotePoco> quotes)
         {
             _quoteRepository.Add(quotes);
+
+            Logger.Current.Info("New quotes added");
         }
 
         private void RemoveOldFromDatabase()
@@ -41,6 +44,8 @@ namespace TT.MarketDataUpdater
             var hour = new TimeSpan(0, 1, 0, 0);
 
             _quoteRepository.RemoveUntil(DateTime.UtcNow - hour);
+
+            Logger.Current.Info("Old quotes deleted");
         }
 
         
