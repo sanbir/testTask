@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.MarketDataService", "Mar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.MarketDataUpdater", "MarketDataService\TT.MarketDataUpdater\TT.MarketDataUpdater.csproj", "{66AC0D1E-EFEA-4C6A-AC32-9CFD13B3E8E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.DAL.Tests", "Tests\TT.UnitTests\TT.DAL.Tests.csproj", "{92E0BA17-9204-4EA8-9348-1F528FD7B6D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.Tests.DAL", "Tests\TT.Tests.DAL\TT.Tests.DAL.csproj", "{92E0BA17-9204-4EA8-9348-1F528FD7B6D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

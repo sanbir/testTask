@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TT.DAL.Pocos;
 using TT.DAL.Repository;
 
-
-namespace TT.UnitTests.DAL
+namespace TT.Tests.DAL.Tests
 {
     [TestClass]
     public class UnitTestsQuoteRepository
@@ -19,7 +15,7 @@ namespace TT.UnitTests.DAL
         [TestMethod]
         public void TestReadWriteDelete()
         {
-            var quoteService = Unity.Container.Resolve<IQuoteRepository>();
+            IQuoteRepository quoteService = new QuoteRepository();
             var time = DateTime.UtcNow.AddHours(-2);
 
             var quotes = new List<QuotePoco>
@@ -62,8 +58,7 @@ namespace TT.UnitTests.DAL
         [TestMethod]
         public void TestGetCurrencyList()
         {
-            var quoteService = Unity.Container.Resolve<IQuoteRepository>();
-
+            IQuoteRepository quoteService = new QuoteRepository();
             var list = quoteService.GetCurrencyList();
             
             Assert.AreNotEqual(0, list.Count);

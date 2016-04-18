@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TT.DAL.Services;
 using TT.WebSocketServer;
 
-namespace TT.WSServer.Tests
+namespace TT.Tests.DAL.Tests
 {
     [TestClass]
     public class QuoteProviderTests

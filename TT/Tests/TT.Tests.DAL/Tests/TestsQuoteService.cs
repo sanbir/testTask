@@ -1,8 +1,7 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TT.DAL.Services;
 
-namespace TT.UnitTests.DAL
+namespace TT.Tests.DAL.Tests
 {
     [TestClass]
     public class TestsQuoteService
@@ -10,7 +9,7 @@ namespace TT.UnitTests.DAL
         [TestMethod]
         public void TestGetQuoutes()
         {
-           var quoteService = Unity.Container.Resolve<IQuoteService>();
+           IQuoteService quoteService = new QuoteService();
            var quotes = quoteService.GetQuotes();
            Assert.AreNotEqual(0, quotes.Count);
         }
