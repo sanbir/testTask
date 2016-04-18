@@ -20,8 +20,8 @@
         <tr>
             <td data-bind="text: Symbol"></td>
             <td data-bind="text: ChangePoints() + ' (' +  ChangePercent() + '%)', style: { color: ChangePoints() > 0 ? 'green' : 'red' }"></td>
-            <td data-bind="text: Bid"></td>
-            <td data-bind="text: Ask"></td>
+            <td data-bind="text: Bid, style: { color: BidColor()}"></td>
+            <td data-bind="text: Ask, style: { color: AskColor()}"></td>
         </tr>
         </tbody>
     </table>

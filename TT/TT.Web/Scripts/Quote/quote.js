@@ -7,17 +7,10 @@ var Quote = function(symbol, change, changePercent, bid, ask)
     this.ChangePercent = ko.observable(changePercent);
 
     this.Bid = ko.observable(bid);
+    this.BidColor = ko.observable("black");
+
     this.Ask = ko.observable(ask);
-};
-
-
-var getTestQuotes = function ()
-{
-    var result = [];
-    result.push(ko.observable(new Quote("eurusd".toUpperCase(), 23, 3, 3,6)));
-    result.push(ko.observable(new Quote("gbpusd".toUpperCase(), -3, -2, 31, 61)));
-    result.push(ko.observable(new Quote("usdcad".toUpperCase(), 53, 5, 13, 16)));
-    return result;
+    this.AskColor = ko.observable("black");
 };
 
 
@@ -35,15 +28,38 @@ ws.onmessage = function (evt)
 
         for (var j = 0; j < quoteModel.quotes().length; j++)
         {
-            if (newQ.Symbol() == quoteModel.quotes()[j]().Symbol())
+            var oldQ = quoteModel.quotes()[j];
+            if (newQ.Symbol() == oldQ().Symbol())
             {
-                quoteModel.quotes()[j](newQ);
+                var bidColor = 'black';
+                if (newQ.Bid() > oldQ().Bid())
+                {
+                    bidColor = 'green';
+                }
+                if (newQ.Bid() < oldQ().Bid()) {
+                    bidColor = 'red';
+                }
+
+                var askColor = 'black';
+                if (newQ.Ask() > oldQ().Ask()) {
+                    askColor = 'green';
+                }
+                if (newQ.Ask() < oldQ().Ask()) {
+                    askColor = 'red';
+                }
+
+                newQ.BidColor = ko.observable(bidColor);
+                newQ.AskColor = ko.observable(askColor);
+
+                oldQ(newQ);
                 found = true;
             }
         }
         if (!found)
         {
-           quoteModel.quotes.push(ko.observable(newQ));
+            newQ.BidColor = ko.observable('black');
+            newQ.AskColor = ko.observable('black');
+            quoteModel.quotes.push(ko.observable(newQ));
         }
     }
 
