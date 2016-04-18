@@ -36,7 +36,7 @@ namespace TT.WSSWinService
 
 
                 //console mode:
-                Console.ReadLine();
+               // Console.ReadLine();
             }
             catch (Exception ex)
             {

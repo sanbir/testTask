@@ -60,7 +60,7 @@ namespace TT.WebSocketServer
                     var clientInfo = new ClientInfo(socket.ConnectionInfo.Id, socket);
                     ClientInfo.TryAdd(socket.ConnectionInfo.Id, clientInfo);
 
-                    var logMessage = "New client connected succesfully. id = " + clientInfo.ConnectionGuid;
+                    var logMessage = "New client connected successfully. id = " + clientInfo.ConnectionGuid;
                     Logger.Current.Info(logMessage);
 
 

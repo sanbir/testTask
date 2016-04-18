@@ -34,7 +34,7 @@ namespace TT.MarketDataService
 
 
                 //console mode:
-                Console.ReadLine();
+               // Console.ReadLine();
             }
             catch (Exception ex)
             {

@@ -10,13 +10,12 @@ namespace TT.WSSWinService
            
             var service = new WebSocketServerWinService();
 
-            var onStartMethod = typeof(ServiceBase).GetMethod("OnStart",
+           /* var onStartMethod = typeof(ServiceBase).GetMethod("OnStart",
                 BindingFlags.Instance | BindingFlags.NonPublic);
             onStartMethod.Invoke(service, new object[] { new string[] { } });
-       
+       */
             
-            /*
-                        ServiceBase.Run(service);*/
+            ServiceBase.Run(service);
         }
 
     }
