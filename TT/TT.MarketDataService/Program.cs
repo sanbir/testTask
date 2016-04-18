@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace TT.MarketDataService
 {
@@ -14,12 +12,15 @@ namespace TT.MarketDataService
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new Service1()
-            };
-            ServiceBase.Run(ServicesToRun);
+            var service = new PublisherWinService();
+
+            var onStartMethod = typeof(ServiceBase).GetMethod("OnStart",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+            onStartMethod.Invoke(service, new object[] { new string[] { } });
+
+
+            /*
+                        ServiceBase.Run(service);*/
         }
     }
 }

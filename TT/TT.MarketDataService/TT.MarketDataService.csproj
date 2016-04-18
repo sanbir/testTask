@@ -44,17 +44,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service1.cs">
+    <Compile Include="PublisherWinService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service1.Designer.cs">
-      <DependentUpon>Service1.cs</DependentUpon>
+    <Compile Include="PublisherWinService.Designer.cs">
+      <DependentUpon>PublisherWinService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TT.Core\TT.Core.csproj">
+      <Project>{838291C3-3A57-4E92-B690-3BE938A0CD3C}</Project>
+      <Name>TT.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.DAL\TT.DAL.csproj">
+      <Project>{79BBEF24-648C-4222-B54C-89D838F01259}</Project>
+      <Name>TT.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TT.MarketDataUpdater\TT.MarketDataUpdater.csproj">
+      <Project>{66AC0D1E-EFEA-4C6A-AC32-9CFD13B3E8E5}</Project>
+      <Name>TT.MarketDataUpdater</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

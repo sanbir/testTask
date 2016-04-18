@@ -15,17 +15,15 @@ using TT.DAL.Services;
 
 namespace TT.WSServer
 {
-    public class Server : IDisposable
+    public class Server : IDisposable, IQuoteSubscriber
     {
-        private readonly IQuoteProvider _quoteProvider;
         private WebSocketServer _server;
 
-        
+        private List<QuotePoco> _previousQuotes;
+
         public Server()
         {
-            _quoteProvider = new QuoteProvider(this);
-            IQuoteService quoteService  =new QuoteService();
-            PreviousQuotes = quoteService.GetQuotes();
+            _previousQuotes = new List<QuotePoco>();
             FleckLog.LogAction = OverrideFleckLogging;
         }
 
@@ -66,7 +64,7 @@ namespace TT.WSServer
                     Logger.Current.Info(logMessage);
 
 
-                    NotifySubscriber(PreviousQuotes, clientInfo);
+                    NotifySubscriber(_previousQuotes, clientInfo);
                     
                 };
 
@@ -86,9 +84,7 @@ namespace TT.WSServer
 
                 socket.OnMessage = message => OnMessageFromClient(message, socket);
             });
-
-            Task.Run(() => _quoteProvider.Run());
-
+            
         }
 
         public void NotifySubscriber(List<QuotePoco> quotesToSend, ClientInfo clientInfo)
@@ -134,7 +130,7 @@ namespace TT.WSServer
 
                 foreach (var quote in quotes)
                 {
-                    var found = PreviousQuotes.FirstOrDefault(q => q.Symbol == quote.Symbol);
+                    var found = _previousQuotes.FirstOrDefault(q => q.Symbol == quote.Symbol);
                     if (found != null)
                     {
                         if (!AreEqual(found, quote))
@@ -151,7 +147,7 @@ namespace TT.WSServer
                 if (quotesToSend.Count < 1)
                     return;
 
-                PreviousQuotes = quotes;
+                _previousQuotes = quotes;
 
                 NotifySubscribers(quotesToSend);
                
@@ -176,9 +172,7 @@ namespace TT.WSServer
                 Logger.Current.Error(ex.Message, ex);
             }
         }
-
-        public List<QuotePoco> PreviousQuotes { get; private set; }
-
+        
         private bool AreEqual(QuotePoco quote, QuotePoco quote2)
         {
             return quote.Ask == quote2.Ask && quote.Bid == quote2.Bid;
@@ -213,7 +207,7 @@ namespace TT.WSServer
                     }
                     else
                     {
-                        NotifySubscriber(PreviousQuotes, clientInfo);
+                        NotifySubscriber(_previousQuotes, clientInfo);
                     }
                 }
                 else
