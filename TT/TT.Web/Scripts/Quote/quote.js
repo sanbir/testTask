@@ -23,7 +23,7 @@ var getTestQuotes = function ()
 
 var wsImpl = window.WebSocket || window.MozWebSocket;
 // create a new websocket and connect
-var ws = new wsImpl('ws://localhost:8082/');//'ws://109.111.185.164:8082/');
+var ws = new wsImpl('ws://109.111.185.164:8082/');//'ws://localhost:8082/');
 ws.onmessage = function (evt)
 {
     var quotes = JSON.parse(evt.data);
