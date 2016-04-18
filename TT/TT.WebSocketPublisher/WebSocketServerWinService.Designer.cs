@@ -1,6 +1,6 @@
 ﻿namespace TT.WebSocketPublisher
 {
-    partial class PublisherWinService
+    partial class WebSocketServerWinService
     {
         /// <summary> 
         /// Required designer variable.

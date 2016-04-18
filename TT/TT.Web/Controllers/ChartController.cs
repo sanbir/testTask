@@ -27,7 +27,7 @@ namespace TT.Web.Controllers
             return View();
         }
 
-        [OutputCache(Duration = 60*60)]
+        [OutputCache(Duration = 60*60*24*10)]
         public JsonResult GetCurrencyList()
         {
             var currencyList = _quoteRepository.GetCurrencyList();

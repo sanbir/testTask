@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.DAL", "TT.DAL\TT.DAL.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.DAL.Tests", "TT.UnitTests\TT.DAL.Tests.csproj", "{92E0BA17-9204-4EA8-9348-1F528FD7B6D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.WebSocketPublisher", "TT.WebSocketPublisher\TT.WebSocketPublisher.csproj", "{53DA8D27-4544-4EB3-9C21-613B64D48065}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.WebSocketServerWinService", "TT.WebSocketPublisher\TT.WebSocketServerWinService.csproj", "{53DA8D27-4544-4EB3-9C21-613B64D48065}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TT.WSServer", "TT.WSServer\TT.WSServer.csproj", "{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}"
 EndProject
