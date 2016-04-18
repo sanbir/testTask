@@ -1,7 +1,7 @@
 ﻿using System;
 using Fleck;
 
-namespace TT.WSServer
+namespace TT.WebSocketServer
 {
     public class ClientInfo
     {

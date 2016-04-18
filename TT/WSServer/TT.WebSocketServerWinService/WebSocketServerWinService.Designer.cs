@@ -1,4 +1,4 @@
-﻿namespace TT.WebSocketPublisher
+﻿namespace TT.WSSWinService
 {
     partial class WebSocketServerWinService
     {

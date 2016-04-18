@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
 
-namespace TT.WebSocketPublisher
+namespace TT.WSSWinService
 {
     static class Program
     {
         private static void Main(string[] args)
         {
            
-            var service = new PublisherWinService();
+            var service = new WebSocketServerWinService();
 
             var onStartMethod = typeof(ServiceBase).GetMethod("OnStart",
                 BindingFlags.Instance | BindingFlags.NonPublic);

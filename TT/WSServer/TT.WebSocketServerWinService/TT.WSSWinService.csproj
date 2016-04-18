@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B41E7F2F-EBBF-4D2A-9364-1945386B94D4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{53DA8D27-4544-4EB3-9C21-613B64D48065}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TT.MarketDataService</RootNamespace>
-    <AssemblyName>TT.MarketDataService</AssemblyName>
+    <RootNamespace>TT.WSSWinService</RootNamespace>
+    <AssemblyName>TT.WebSocketPublisher</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,7 +32,29 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=1.11.0.92, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.1.11.0\lib\net35\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.11.0.92, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.1.11.0\lib\net35\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoRepository.Net45, Version=1.6.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MongoRepository.1.6.11\lib\net45\MongoRepository.Net45.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,30 +66,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PublisherWinService.cs">
+    <Compile Include="WebSocketServerWinService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PublisherWinService.Designer.cs">
-      <DependentUpon>PublisherWinService.cs</DependentUpon>
+    <Compile Include="WebSocketServerWinService.Designer.cs">
+      <DependentUpon>WebSocketServerWinService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="..\packages\MongoRepository.1.6.11\MongoRepository.chm">
+      <Link>Documentation\MongoRepository.chm</Link>
+    </None>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TT.Core\TT.Core.csproj">
+    <ProjectReference Include="..\..\TT.Core\TT.Core.csproj">
       <Project>{838291C3-3A57-4E92-B690-3BE938A0CD3C}</Project>
       <Name>TT.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TT.DAL\TT.DAL.csproj">
+    <ProjectReference Include="..\..\TT.DAL\TT.DAL.csproj">
       <Project>{79BBEF24-648C-4222-B54C-89D838F01259}</Project>
       <Name>TT.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TT.MarketDataUpdater\TT.MarketDataUpdater.csproj">
-      <Project>{66AC0D1E-EFEA-4C6A-AC32-9CFD13B3E8E5}</Project>
-      <Name>TT.MarketDataUpdater</Name>
+    <ProjectReference Include="..\TT.WSServer\TT.WebSocketServer.csproj">
+      <Project>{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}</Project>
+      <Name>TT.WebSocketServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

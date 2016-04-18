@@ -1,19 +1,18 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
 using TT.DAL.Services;
 
-namespace TT.UnitTests
+namespace TT.UnitTests.DAL
 {
     [TestClass]
-    public class UnitTestsQuoteFetcherService
+    public class TestsQuoteService
     {
         [TestMethod]
         public void TestGetQuoutes()
         {
            var quoteService = Unity.Container.Resolve<IQuoteService>();
            var quotes = quoteService.GetQuotes();
+           Assert.AreNotEqual(0, quotes.Count);
         }
     }
 }

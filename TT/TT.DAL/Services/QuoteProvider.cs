@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using TT.DAL.Pocos;
-using TT.DAL.Repository;
-using TT.DAL.Services;
 
-namespace TT.WSServer
+namespace TT.DAL.Services
 {
     public class QuoteProvider : IQuoteProvider
     {

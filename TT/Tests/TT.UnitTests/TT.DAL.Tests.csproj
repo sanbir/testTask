@@ -82,7 +82,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DAL\UnitTestsQuoteFetcherService.cs" />
+    <Compile Include="DAL\QuoteProviderTests.cs" />
+    <Compile Include="DAL\TestsQuoteService.cs" />
     <Compile Include="DAL\UnitTestsQuoteRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unity.cs" />
@@ -95,7 +96,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TT.DAL\TT.DAL.csproj">
+    <ProjectReference Include="..\..\TT.DAL\TT.DAL.csproj">
       <Project>{79bbef24-648c-4222-b54c-89d838f01259}</Project>
       <Name>TT.DAL</Name>
     </ProjectReference>

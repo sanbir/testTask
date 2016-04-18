@@ -13,11 +13,11 @@ using TT.DAL.Pocos;
 using TT.DAL.Services;
 
 
-namespace TT.WSServer
+namespace TT.WebSocketServer
 {
     public class Server : IDisposable, IQuoteSubscriber
     {
-        private WebSocketServer _server;
+        private Fleck.WebSocketServer _server;
 
         private List<QuotePoco> _previousQuotes;
 
@@ -51,7 +51,7 @@ namespace TT.WSServer
         public void Initialize()
         {
             string location = TTSettings.GetAppSetting<string>("hostingUrl", defaultVal: "ws://0.0.0.0:8082");
-            _server = new WebSocketServer(location);
+            _server = new Fleck.WebSocketServer(location);
 
             _server.Start(socket =>
             {

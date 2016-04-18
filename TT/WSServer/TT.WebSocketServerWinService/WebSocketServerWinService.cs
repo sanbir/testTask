@@ -3,15 +3,15 @@ using System.ServiceProcess;
 using System.Threading.Tasks;
 using TT.Core.Logger;
 using TT.DAL.Services;
-using TT.WSServer;
+using TT.WebSocketServer;
 
-namespace TT.MarketDataService
+namespace TT.WSSWinService
 {
-    partial class PublisherWinService : ServiceBase
+    partial class WebSocketServerWinService : ServiceBase
     {
-        private MarketDataUpdater.MarketDataUpdater _marketDataUpdater;
+        private Server _WSServer;
         private IQuoteProvider _quoteProvider;
-        public PublisherWinService()
+        public WebSocketServerWinService()
         {
             InitializeComponent();
         }
@@ -25,9 +25,10 @@ namespace TT.MarketDataService
             {
                 Task.Run(() =>
                 {
-                    _marketDataUpdater = new MarketDataUpdater.MarketDataUpdater();
-                    
-                    _quoteProvider = new QuoteProvider(_marketDataUpdater);
+                    _WSServer = new Server();
+                    _WSServer.Initialize();
+
+                    _quoteProvider = new QuoteProvider(_WSServer);
                     Task.Run(() => _quoteProvider.Run());
                 }
                     );
@@ -54,6 +55,7 @@ namespace TT.MarketDataService
         {
             try
             {
+                _WSServer?.Dispose();
                 Logger.Current.Info("--SERVICE STOPPED--");
             }
             catch (Exception ex)
