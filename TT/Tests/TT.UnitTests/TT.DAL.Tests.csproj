@@ -100,6 +100,10 @@
       <Project>{79bbef24-648c-4222-b54c-89d838f01259}</Project>
       <Name>TT.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\WSServer\TT.WSServer\TT.WebSocketServer.csproj">
+      <Project>{8D071AB2-D87C-4EA3-A62B-8AF03AB22B31}</Project>
+      <Name>TT.WebSocketServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
